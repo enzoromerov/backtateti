@@ -31,12 +31,12 @@ class V1::GameController < ApplicationController
         x = params[:movement][1]
         y = params[:movement][2]
         board = JSON[game.board]
-        isValidMovement = game.isValidMovement?(board, x,y, game.result)
-        if(isValidMovement)
+        esValido = game.movimientoValido?(board, x,y, game.result)
+        if(esValido)
             board[x][y] = currentPlayer
-            game.board = board
+            game.tablero = board
             game.moveNumber += 1
-            game.result = game.get_result(board, game.moveNumber)
+            game.resultado = game.getResultado(board, game.moveNumber)
             if game.save
                 return render(json: {board: board, winner: game.result }, status: 200)
             end
